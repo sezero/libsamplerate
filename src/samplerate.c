@@ -29,7 +29,8 @@ src_new (int converter_type, int channels, int *error)
 
 SRC_STATE*
 src_clone (SRC_STATE* orig, int *error)
-{
+{	SRC_STATE	*state ;
+
 	if (!orig)
 	{
 		if (error)
@@ -39,7 +40,7 @@ src_clone (SRC_STATE* orig, int *error)
 	if (error)
 		*error = SRC_ERR_NO_ERROR ;
 
-	SRC_STATE *state = orig->vt->copy (orig) ;
+	state = orig->vt->copy (orig) ;
 	if (!state)
 		if (error)
 			*error = SRC_ERR_MALLOC_FAILED ;
