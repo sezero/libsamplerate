@@ -175,10 +175,10 @@ linear_get_description (int src_enum)
 
 static LINEAR_DATA *
 linear_data_new (int channels)
-{
+{	LINEAR_DATA *priv ;
 	assert (channels > 0) ;
 
-	LINEAR_DATA *priv = (LINEAR_DATA *) calloc (1, sizeof (LINEAR_DATA)) ;
+	priv = (LINEAR_DATA *) calloc (1, sizeof (LINEAR_DATA)) ;
 	if (priv)
 	{
 		priv->linear_magic_marker = LINEAR_MAGIC_MARKER ;
@@ -195,11 +195,12 @@ linear_data_new (int channels)
 
 LIBSAMPLERATE_DLL_PRIVATE SRC_STATE *
 linear_state_new (int channels, SRC_ERROR *error)
-{
+{	SRC_STATE *state ;
+
 	assert (channels > 0) ;
 	assert (error != NULL) ;
 
-	SRC_STATE *state = (SRC_STATE *) calloc (1, sizeof (SRC_STATE)) ;
+	state = (SRC_STATE *) calloc (1, sizeof (SRC_STATE)) ;
 	if (!state)
 	{
 		*error = SRC_ERR_MALLOC_FAILED ;
@@ -245,19 +246,21 @@ linear_reset (SRC_STATE *state)
 
 SRC_STATE *
 linear_copy (SRC_STATE *state)
-{
+{	SRC_STATE *to ;
+	LINEAR_DATA *from_priv, *to_priv ;
+
 	assert (state != NULL) ;
 
 	if (state->private_data == NULL)
 		return NULL ;
 
-	SRC_STATE *to = (SRC_STATE *) calloc (1, sizeof (SRC_STATE)) ;
+	to = (SRC_STATE *) calloc (1, sizeof (SRC_STATE)) ;
 	if (!to)
 		return NULL ;
 	memcpy (to, state, sizeof (SRC_STATE)) ;
 
-	LINEAR_DATA* from_priv = (LINEAR_DATA*) state->private_data ;
-	LINEAR_DATA *to_priv = (LINEAR_DATA *) calloc (1, sizeof (LINEAR_DATA)) ;
+	from_priv = (LINEAR_DATA*) state->private_data ;
+	to_priv = (LINEAR_DATA *) calloc (1, sizeof (LINEAR_DATA)) ;
 	if (!to_priv)
 	{
 		free (to) ;
