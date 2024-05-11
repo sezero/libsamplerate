@@ -18,7 +18,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__WATCOMC__)
 #define popen _popen
 #define pclose _pclose
 #endif
