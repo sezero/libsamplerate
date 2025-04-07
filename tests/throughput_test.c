@@ -25,6 +25,10 @@
 #endif
 #include <windows.h>
 #endif
+#ifdef __OS2__
+#define INCL_DOS
+#include <os2.h>
+#endif
 
 #include <samplerate.h>
 
@@ -56,6 +60,8 @@ throughput_test (int converter, long best_throughput)
 
 #ifdef _WIN32
 	Sleep (2000) ;
+#elif defined(__OS2__)
+	DosSleep (2000) ;
 #else
 	sleep (2) ;
 #endif
@@ -176,6 +182,8 @@ multi_run (int run_count)
 		/* Let the CPU cool down. We might be running on a laptop. */
 #ifdef _WIN32
 		Sleep (10000) ;
+#elif defined(__OS2__)
+		DosSleep (2000) ;
 #else
 		sleep (10) ;
 #endif
