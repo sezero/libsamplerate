@@ -164,10 +164,11 @@ zoh_get_description (int src_enum)
 
 static ZOH_DATA *
 zoh_data_new (int channels)
-{
+{	ZOH_DATA *priv ;
+
 	assert (channels > 0) ;
 
-	ZOH_DATA *priv = (ZOH_DATA *) calloc (1, sizeof (ZOH_DATA)) ;
+	priv = (ZOH_DATA *) calloc (1, sizeof (ZOH_DATA)) ;
 	if (priv)
 	{
 		priv->zoh_magic_marker = ZOH_MAGIC_MARKER ;
@@ -184,11 +185,12 @@ zoh_data_new (int channels)
 
 LIBSAMPLERATE_DLL_PRIVATE SRC_STATE *
 zoh_state_new (int channels, SRC_ERROR *error)
-{
+{	SRC_STATE *state ;
+
 	assert (channels > 0) ;
 	assert (error != NULL) ;
 
-	SRC_STATE *state = (SRC_STATE *) calloc (1, sizeof (SRC_STATE)) ;
+	state = (SRC_STATE *) calloc (1, sizeof (SRC_STATE)) ;
 	if (!state)
 	{
 		*error = SRC_ERR_MALLOC_FAILED ;
@@ -234,19 +236,21 @@ zoh_reset (SRC_STATE *state)
 
 static SRC_STATE *
 zoh_copy (SRC_STATE *state)
-{
+{	SRC_STATE *to ;
+	ZOH_DATA *from_priv, *to_priv ;
+
 	assert (state != NULL) ;
 
 	if (state->private_data == NULL)
 		return NULL ;
 
-	SRC_STATE *to = (SRC_STATE *) calloc (1, sizeof (SRC_STATE)) ;
+	to = (SRC_STATE *) calloc (1, sizeof (SRC_STATE)) ;
 	if (!to)
 		return NULL ;
 	memcpy (to, state, sizeof (SRC_STATE)) ;
 
-	ZOH_DATA* from_priv = (ZOH_DATA*) state->private_data ;
-	ZOH_DATA *to_priv = (ZOH_DATA *) calloc (1, sizeof (ZOH_DATA)) ;
+	from_priv = (ZOH_DATA *) state->private_data ;
+	to_priv = (ZOH_DATA *) calloc (1, sizeof (ZOH_DATA)) ;
 	if (!to_priv)
 	{
 		free (to) ;

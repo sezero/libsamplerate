@@ -147,6 +147,7 @@ single_run (void)
 static void
 multi_run (int run_count)
 {	int channels[] = {1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18};
+	int i, k ;
 
 	printf ("\n    CPU name : %s\n", get_cpu_name ()) ;
 
@@ -156,7 +157,7 @@ multi_run (int run_count)
 		"    ----------------------------------------------------------------------------------------"
 		) ;
 
-	for (int i = 0 ; i < ARRAY_LEN(channels) ; i++)
+	for (i = 0 ; i < ARRAY_LEN(channels) ; i++)
 	{
 #ifdef ENABLE_SINC_FAST_CONVERTER
 		long sinc_fastest = 0 ;
@@ -169,7 +170,7 @@ multi_run (int run_count)
 #endif
 		int ch = channels[i];
 
-		for (int k = 0 ; k < run_count ; k++)
+		for (k = 0 ; k < run_count ; k++)
 		{
 #ifdef ENABLE_SINC_FAST_CONVERTER
 			throughput_test (SRC_SINC_FASTEST, ch, &sinc_fastest) ;

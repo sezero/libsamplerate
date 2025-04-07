@@ -29,7 +29,8 @@ src_new (int converter_type, int channels, int *error)
 
 SRC_STATE*
 src_clone (SRC_STATE* orig, int *error)
-{
+{	SRC_STATE	*state ;
+
 	if (!orig)
 	{
 		if (error)
@@ -39,7 +40,7 @@ src_clone (SRC_STATE* orig, int *error)
 	if (error)
 		*error = SRC_ERR_NO_ERROR ;
 
-	SRC_STATE *state = orig->vt->copy (orig) ;
+	state = orig->vt->copy (orig) ;
 	if (!state)
 		if (error)
 			*error = SRC_ERR_MALLOC_FAILED ;
@@ -426,8 +427,8 @@ src_simple (SRC_DATA *src_data, int converter, int channels)
 
 void
 src_short_to_float_array (const short *in, float *out, int len)
-{
-	for (int i = 0 ; i < len ; i++)
+{	int i = 0;
+	for ( ; i < len ; i++)
 	{	out [i] = (float) (in [i] / (1.0 * 0x8000)) ;
 		} ;
 
@@ -436,8 +437,8 @@ src_short_to_float_array (const short *in, float *out, int len)
 
 void
 src_float_to_short_array (const float *in, short *out, int len)
-{
-	for (int i = 0 ; i < len ; i++)
+{	int i = 0;
+	for ( ; i < len ; i++)
 	{	float scaled_value ;
 		scaled_value = in [i] * 32768.f ;
 		if (scaled_value >= 32767.f)
@@ -451,8 +452,8 @@ src_float_to_short_array (const float *in, short *out, int len)
 
 void
 src_int_to_float_array (const int *in, float *out, int len)
-{
-	for (int i = 0 ; i < len ; i++)
+{	int i = 0;
+	for ( ; i < len ; i++)
 	{	out [i] = (float) (in [i] / (8.0 * 0x10000000)) ;
 		} ;
 
@@ -463,7 +464,8 @@ void
 src_float_to_int_array (const float *in, int *out, int len)
 {	double scaled_value ;
 
-	for (int i = 0 ; i < len ; i++)
+	int i = 0;
+	for ( ; i < len ; i++)
 	{	scaled_value = in [i] * (8.0 * 0x10000000) ;
 #if CPU_CLIPS_POSITIVE == 0
 		if (scaled_value >= (1.0 * 0x7FFFFFFF))
