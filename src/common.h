@@ -214,6 +214,10 @@ psf_lrint (double x)
 	return _mm_cvtsd_si32 (_mm_load_sd (&x)) ;
 }
 
+#elif defined(__WATCOMC__) /* use macros with Watcom */
+#define psf_lrint  lrint
+#define psf_lrintf lrintf
+
 #else
 
 static inline int psf_lrintf (float x)
